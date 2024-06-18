@@ -1,6 +1,7 @@
 import math
 import numpy as np
 
+""" A robust checker if two triangles intersect whether in 2D or 3D - call primary function at the end for different uses """
 ## FOR 2D
 def find_orientation(p,q,r):
     """
