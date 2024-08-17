@@ -1,6 +1,6 @@
 from utilites import *
 import matplotlib.pyplot as plt
-
+''' put this file and utilites.py in the same dir '' 
 
 our_tree = AVLTree()
 our_pqueue = MinHeap() # NEW
