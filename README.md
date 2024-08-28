@@ -1,1 +1,1 @@
-diverse repertoire of my experiences with python
+a diverse repertoire of my experiments with python
