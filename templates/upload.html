@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload and Stats</title>
+    <script>
+        function uploadFile() {
+            const formData = new FormData();
+            const fileField = document.querySelector('input[type="file"]');
+
+            formData.append('file', fileField.files[0]);
+
+            fetch('/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    document.getElementById('output').innerHTML =
+                        '<h2>File processed successfully!</h2>' +
+                        '<p>Output: ' + result.output.join(', ') + '</p>';
+                } else {
+                    document.getElementById('output').innerHTML =
+                        '<h2>Error:</h2><p>' + result.message + '</p>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('output').innerHTML =
+                    '<h2>Error:</h2><p>' + error + '</p>';
+                console.error('Error:', error);
+            });
+        }
+
+        function showDB(dbType) {
+            fetch(`/show_db?type=${dbType}`)
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    let tableContent = '<table border="1"><tr><th>Formulation ID</th><th>Calculated Value</th></tr>';
+                    result.data.forEach(row => {
+                        tableContent += `<tr><td>${row.formulation_id}</td><td>${row.calculated_value}</td></tr>`;
+                    });
+                    tableContent += '</table>';
+                    document.getElementById('dbOutput').innerHTML = `<h2>${dbType.toUpperCase()} Database Contents:</h2>` + tableContent;
+                } else {
+                    document.getElementById('dbOutput').innerHTML = `<h2>Error:</h2><p>${result.message}</p>`;
+                }
+            })
+            .catch(error => {
+                document.getElementById('dbOutput').innerHTML = `<h2>Error:</h2><p>${error}</p>`;
+                console.error('Error:', error);
+            });
+        }
+
+        function showStats(dbType) {
+            fetch(`/get_stats?type=${dbType}`)
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    document.getElementById('statsOutput').innerHTML =
+                        `<h2>${dbType.toUpperCase()} Database Stats:</h2>` +
+                        `<p>Median: ${result.median}</p>` +
+                        `<p>Average: ${result.average}</p>` +
+                        `<p>Standard Deviation: ${result.std}</p>`;
+                } else {
+                    document.getElementById('statsOutput').innerHTML = `<h2>Error:</h2><p>${result.message}</p>`;
+                }
+            })
+            .catch(error => {
+                document.getElementById('statsOutput').innerHTML = `<h2>Error:</h2><p>${error}</p>`;
+                console.error('Error:', error);
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Upload a File</h1>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Upload</button>
+
+    <h2>Database Actions</h2>
+    <button onclick="showDB('tns')">Show TNS Database</button>
+    <button onclick="showDB('zeta')">Show Zeta Database</button>
+    <button onclick="showStats('tns')">Show TNS Stats</button>
+    <button onclick="showStats('zeta')">Show Zeta Stats</button>
+
+    <div id="output"></div>
+    <div id="dbOutput"></div>
+    <div id="statsOutput"></div>
+</body>
+</html>
