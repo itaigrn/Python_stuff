@@ -1,4 +1,3 @@
-Itai Grigoriu's submission for home exercise mana.bio
 
 1. after the zip file has been unzipped open the extracted directory in an IDE and install uv with 'pip install uv' in the terminal
 2. enter the command line 'uv run app.py'
