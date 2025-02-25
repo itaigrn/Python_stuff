@@ -1,4 +1,6 @@
+Data proccesing and upload webpage for expirements results file and storing proccessed results in a sql file.
 
+How to run:
 1. after the zip file has been unzipped open the this directory's files in as a project in an IDE and install uv with 'pip install uv' in the terminal
 2. enter the command line 'uv run app.py'
 3. a link to the relevant URL will open up - click on it, and you will be able to upload files
@@ -11,3 +13,5 @@ and also stats about each type of experiment/instrument by pressing the relevant
 assumptions:
 * in TNS experiment type, since the name of the formulation (AKA formulation_id) is not explicitly mentioned, I took the liberty to create a counter
 that will distribute a unique natural number for each formulation sequentially.
+
+for question you can try my email itaigrn286@gmail.com
